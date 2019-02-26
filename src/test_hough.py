@@ -15,7 +15,7 @@ import time
 
 
 # Capture frame-by-frame
-frame = cv2.imread('../pics/truck7.jpg')
+frame = cv2.imread('../pics/truck14.jpg')
 size = frame.shape
 # load the image, clone it for output, and then convert it to grayscale
 #frame = cv2.resize(frame,None,fx=0.5,fy=0.5,interpolation=cv2.INTER_CUBIC)	
@@ -33,7 +33,6 @@ gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
 #kernel = np.ones((2.6,2.7),np.uint8)
 #gray = cv2.erode(gray,kernel,iterations = 1)
-# gray = erosion
 
 #gray = cv2.dilate(gray,kernel,iterations = 1)
 # gray = dilation
