@@ -45,7 +45,7 @@ def download_movie(movie_url, _path):
             print('>>>[+] File ' + movie_name + ' done')
         # Picture part **********************************************************************************************************
             print("Image Conversion Test: \n")
-            cap = cv2.VideoCapture(movie_name)
+            cap = cv2.VideoCapture(_url)
             ret, image= cap.read()
             timestamp = str(time.strftime("%Y-%m-%d-%H:%M:%S", time.localtime()))
             cv2.imwrite(timestamp+".jpg",image)
@@ -70,11 +70,11 @@ def download_movie(movie_url, _path):
 def process(image):
     image_cut = image[560:600, 680:740]
     image_rotater = cv2.getRotationMatrix2D((30,20),30,1)
-    image_rotated = cv2.warpAffine(image_cut,image_rotater,(60,40))
-    image_fine_cut = image_rotated[10:30,20:50]
+    image_rotated = cv2.warpAffine(image_cut,image_rotater,(120,80))
+    image_fine_cut = image_rotated[20:60,40:100]
     image_warped =  cv2.cvtColor(image_fine_cut, cv2.COLOR_BGR2GRAY)
-    image_bw = cv2.threshold(image_warped,0,255,cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)
-    return image_bw
+    #image_bw = cv2.threshold(image_warped,0,255,cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)
+    return image_warped
 
 if __name__ == "__main__":
     #TODO: to request accessToken and fresh it
@@ -87,7 +87,7 @@ if __name__ == "__main__":
             
         #time.sleep(5)
     download_movie(ts_url_list,path)
-   
+    
         
     #cmd_str = hebing('./',timestamp+".mp4")
     #runConvertMp4(cmd_str)
