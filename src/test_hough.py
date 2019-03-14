@@ -18,7 +18,7 @@ import os
 #for root, dirs, files in os.walk("../pics/side_view_of_trucks/"): 
 #    for filename in files:
 #        print filename
-frame = cv2.imread("../pics/side_view_of_trucks/test.jpeg")
+frame = cv2.imread("../pics/perspectivetransform/1552201351.204524.jpg")
 #try:
 size = frame.shape
 # load the image, clone it for output, and then convert it to grayscale
@@ -42,13 +42,13 @@ gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 #gray = cv2.dilate(gray,kernel,iterations = 1)
 # gray = dilation
 gray1 = cv2.Sobel(gray,-1, 0, 1)
-img = gray1[size[0]/2:,0:]
+img = gray1
 # get the size of the final image
 # img_size = gray.shape
 # print img_size
 gray2 = cv2.Sobel(gray,-1,1,0)
 # detect circles in the image
-circles = cv2.HoughCircles(img, cv2.HOUGH_GRADIENT, 1, 30, param1=100, param2=50, minRadius=5, maxRadius=50)#param2=50 is better for most cases
+circles = cv2.HoughCircles(img, cv2.HOUGH_GRADIENT, 1, 30, param1=100, param2=50, minRadius=150, maxRadius=200)#param2=50 is better for most cases
 # print circles
 
 # ensure at least some circles were found
@@ -61,35 +61,13 @@ if circles is not None:
         # draw the circle in the output image, then draw a rectangle in the image
         # corresponding to the center of the circle
         #ROI.append([x - r - 5, y+size[0]/2-r - 5,x +r+ 5, y +r+size[0]/2+ 5])#x_tl; y_tl; x_br; y_br;
-        imgToCheck = output[y+size[0]/2-r-5:y+size[0]/2+r+5, x-r-5:x+r+5]
+        imgToCheck = output[y-r-5:y+r+5, x-r-5:x+r+5]
         #save_path = '../pics/data_for_training/' + str(time.time()) + '.jpg'
         #cv2.imwrite(save_path, imgToCheck)
-        cv2.circle(output, (x, y+size[0]/2), r, (0, 255, 0), 4)
+        cv2.circle(output, (x, y), r, (0, 255, 0), 4)
         
         #cv2.rectangle(output, (x - r-5, y+size[0]/2-r - 5), (x +r+ 5, y +r+size[0]/2+ 5), (0, 128, 255), 2)
-        time.sleep(0.5)
-        
-img = gray2[size[0]/2:,0:]
-circles = cv2.HoughCircles(img, cv2.HOUGH_GRADIENT, 1, 30, param1=100, param2=50, minRadius=50, maxRadius=100)
-
-if circles is not None:
-# convert the (x, y) coordinates and radius of the circles to integers
-    circles = np.round(circles[0, :]).astype("int")
-
-# loop over the (x, y) coordinates and radius of the circles
-    for (x, y, r) in circles:
-        # draw the circle in the output image, then draw a rectangle in the image
-        # corresponding to the center of the circle
-        #ROI.append([x - r - 5, y+size[0]/2-r - 5,x +r+ 5, y +r+size[0]/2+ 5])#x_tl; y_tl; x_br; y_br;
-        imgToCheck = output[y+size[0]/2-r-5:y+size[0]/2+r+5, x-r-5:x+r+5]
-        #save_path = '../pics/data_for_training/' + str(time.time()) + '.jpg'
-        #cv2.imwrite(save_path, imgToCheck)
-        cv2.circle(output, (x, y+size[0]/2), r, (0, 255, 128), 4)
-        
-        #cv2.rectangle(output, (x - r-5, y+size[0]/2-r - 5), (x +r+ 5, y +r+size[0]/2+ 5), (0, 128, 255), 2)
-        time.sleep(0.5)
-
-# Display the resulting frame
+        #time.sleep(0.5)
     print(len(circles))
     cv2.imshow('gray',gray)
     cv2.imshow('frame',output)
@@ -100,3 +78,24 @@ if circles is not None:
 # When everything done, release the capture
 #cap.release()
 cv2.destroyAllWindows()
+'''        
+img = gray2
+circles = cv2.HoughCircles(img, cv2.HOUGH_GRADIENT, 1, 30, param1=100, param2=50, minRadius=150, maxRadius=200)
+
+if circles is not None:
+# convert the (x, y) coordinates and radius of the circles to integers
+    circles = np.round(circles[0, :]).astype("int")
+
+# loop over the (x, y) coordinates and radius of the circles
+    for (x, y, r) in circles:
+        # draw the circle in the output image, then draw a rectangle in the image
+        # corresponding to the center of the circle
+        #ROI.append([x - r - 5, y+size[0]/2-r - 5,x +r+ 5, y +r+size[0]/2+ 5])#x_tl; y_tl; x_br; y_br;
+        imgToCheck = output[y-r-5:y+r+5, x-r-5:x+r+5]
+        #save_path = '../pics/data_for_training/' + str(time.strftime("%Y-%m-%d-%H:%M:%S", time.localtime())) + '.jpg'
+        #cv2.imwrite(save_path, imgToCheck)
+        cv2.circle(output, (x, y), r, (0, 255, 128), 4)
+        #cv2.rectangle(output, (x - r-5, y+size[0]/2-r - 5), (x +r+ 5, y +r+size[0]/2+ 5), (0, 128, 255), 2)
+'''
+# Display the resulting frame
+     
