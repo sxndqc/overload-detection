@@ -3,6 +3,7 @@ import requests
 import subprocess
 import os
 import time
+import cv2
 """
 get m3u8ts files
 """
@@ -46,9 +47,17 @@ def download_movie(movie_url, _path):
                 movie_content.writelines(movie)
             print('>>>[+] File ' + movie_name + ' done')
         # 捕获异常，记录失败请求
+        # Picture part **********************************************************************************************************
+            print("Image Conversion Test: \n")
+            cap = cv2.VideoCapture(_url)
+            ret, image= cap.read()
+            cv2.imwrite("test.jpg",image)    
+        # ***********************************************************************************************************************
         except:
             error_get.append(_url)
             continue
+        
+
     # 如果没有不成功的请求就结束
     if error_get:
         # print u'共有%d个请求失败' % len(file_list)
@@ -57,6 +66,7 @@ def download_movie(movie_url, _path):
     else:
         print('>>>[+] Download successfully!!!')
 
+    
 """
 combine ts files
 ls * | perl -nale 'chomp;push @a, $_;END{printf "ffmpeg -i \"concat:%s\" -acodec copy -vcodec copy -absf aac_adtstoasc out.mp4\n", join("|",@a)}' 
