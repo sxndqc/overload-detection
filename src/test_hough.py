@@ -18,7 +18,12 @@ import os
 #for root, dirs, files in os.walk("../pics/side_view_of_trucks/"): 
 #    for filename in files:
 #        print filename
+<<<<<<< HEAD
+#frame = cv2.imread("../pics/perspectivetransform/Screen Shot 2019-03-18 at 12.18.02 AM.png")
+frame = cv2.imread('noise_filtered.jpg')
+=======
 frame = cv2.imread("../pics/perspectivetransform/1552201351.204524.jpg")
+>>>>>>> 00a8d5e1b2ef6b41080f1d1181bea9edb0b1378c
 #try:
 size = frame.shape
 # load the image, clone it for output, and then convert it to grayscale
@@ -48,7 +53,11 @@ img = gray1
 # print img_size
 gray2 = cv2.Sobel(gray,-1,1,0)
 # detect circles in the image
+<<<<<<< HEAD
+circles = cv2.HoughCircles(img, cv2.HOUGH_GRADIENT, 1, 30, param1=100, param2=50, minRadius=10, maxRadius=50)#param2=50 is better for most cases
+=======
 circles = cv2.HoughCircles(img, cv2.HOUGH_GRADIENT, 1, 30, param1=100, param2=50, minRadius=150, maxRadius=200)#param2=50 is better for most cases
+>>>>>>> 00a8d5e1b2ef6b41080f1d1181bea9edb0b1378c
 # print circles
 
 # ensure at least some circles were found

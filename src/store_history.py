@@ -4,8 +4,11 @@ import time
 #import cv2
 #import numpy as np
 import logging
+<<<<<<< HEAD
+=======
 import os
 import sys, getopt
+>>>>>>> 00a8d5e1b2ef6b41080f1d1181bea9edb0b1378c
 
 appkey = '00633c496fbe46b49751f96de8057f70'
 secret = '69cc22b33bfa54498734680ffbb6e023'
@@ -18,13 +21,22 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 
+<<<<<<< HEAD
+def request(appkey=None, secret=None,target=None,accessToken=None,channel=None):
+    channels = [2,4,5]
+=======
 def request(appkey=None, secret=None,target=None,accessToken=None,deviceSerial=None,channel=None):
     #channels = [2,4,5]
+>>>>>>> 00a8d5e1b2ef6b41080f1d1181bea9edb0b1378c
     headers = {'Content-Type': 'application/x-www-form-urlencoded'}
     if secret:
         r = requests.post('https://open.ys7.com/api/lapp/token/get', headers=headers, data = {'appKey': appkey, 'appSecret': secret})
     else:
+<<<<<<< HEAD
+        r = requests.post('https://open.ys7.com/api/lapp/live/address/limited', headers=headers, data = {'accessToken': accessToken, 'deviceSerial': 'C63000956', 'channelNo': channel})
+=======
         r = requests.post('https://open.ys7.com/api/lapp/live/address/limited', headers=headers, data = {'accessToken': accessToken, 'deviceSerial': deviceSerial, 'channelNo': channel})
+>>>>>>> 00a8d5e1b2ef6b41080f1d1181bea9edb0b1378c
     
     #print(r.text)
     if r.status_code == requests.codes.ok:
@@ -52,19 +64,32 @@ def request(appkey=None, secret=None,target=None,accessToken=None,deviceSerial=N
 def getM3u8(url):
     m3u8_obj = m3u8.load(url)  # this could also be an absolute filename
 
+<<<<<<< HEAD
+    ts_url_list = []
+
+    base_uri = m3u8_obj.base_uri
+=======
     #ts_url_list = []
 
     #base_uri = m3u8_obj.base_uri
+>>>>>>> 00a8d5e1b2ef6b41080f1d1181bea9edb0b1378c
 
     ts_list = m3u8_obj.files
 
     return ts_list
 
+<<<<<<< HEAD
+def save(ts_url_list):
+    #print(ts_url_list)
+    error_get = []
+    path = '/Users/pro/Documents/GIX/courses/thesis/axle_detection/wieght-limit-recgonize/data/ts/'
+=======
 def save(ts_url_list, path):
     #print(ts_url_list)
     error_get = []
     #'/Users/GIX/Downloads/wieght-limit-recgonize/data/'
     os.chdir(path)
+>>>>>>> 00a8d5e1b2ef6b41080f1d1181bea9edb0b1378c
     for ts in ts_url_list:
         try:
             movie_name = str(time.time())+'.ts'
@@ -73,6 +98,28 @@ def save(ts_url_list, path):
                 movie_content.writelines(movie)
             
         except:
+<<<<<<< HEAD
+            error_get.append(_url)
+            continue
+        
+    if error_get:
+        logger.warning('cannot get videos:'+ error_get)
+        save(error_get)
+
+if __name__ == "__main__":
+    accessToken = 'at.7au8lk9n4q5ccic55yk1a7ieanui8fn7-5j1xvqx2kb-1st2uu3-5jgeg8jcc'
+    channel = 2
+    while True:
+        r = request(accessToken=accessToken, channel=channel)
+        #print(type(r))
+        if type(r) == str:
+            ts_list = getM3u8(r)
+            save(ts_list)
+        else:
+            accessToken = r['token']
+            #r = request(accessToken=accessToken, channel=channel)
+        time.sleep(10)
+=======
             error_get.append(ts)
             continue
         
@@ -113,4 +160,5 @@ if __name__ == "__main__":
             logger.info('newest accessToken:' + accessToken )
             #r = request(accessToken=accessToken, channel=channel)
         time.sleep(1)
+>>>>>>> 00a8d5e1b2ef6b41080f1d1181bea9edb0b1378c
     
