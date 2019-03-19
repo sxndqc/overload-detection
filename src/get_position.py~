@@ -2,8 +2,10 @@ import cv2
 import numpy as np
 
 img = cv2.imread('../pics/2019-03-18-16:07:57.jpg')
+cv2.imshow('img',img)
+cv2.waitKey(0)
 #print img.shape
-image = img[img.shape[0]//2:,0:]
+image = img[img.shape[0]/2:,0:]
 def on_EVENT_LBUTTONDOWN(event, x, y, flags, param):
     if event == cv2.EVENT_LBUTTONDOWN:
         xy = "%d,%d" % (x, y)

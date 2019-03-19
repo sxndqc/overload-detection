@@ -9,7 +9,7 @@ rows,cols = image.shape[:2]
 def get_perspective_mat():
  
     src_points = np.array([[681., 547.], [676., 565.], [736., 580.], [731., 599.]], dtype = "float32")
-    dst_points = np.array([[681., 540.], [681., 560.], [736.,540.], [736., 560.]], dtype = "float32")
+    dst_points = np.array([[681., 540], [681., 560.], [736.,540.], [736., 560.]], dtype = "float32")
  
     M = cv2.getPerspectiveTransform(src_points, dst_points)
  
@@ -21,8 +21,6 @@ def get_perspective_mat():
 M = get_perspective_mat()
 np.save("M.dat",M)
 res = cv2.warpPerspective(image, M, (rows, cols), cv2.INTER_LINEAR)
-cv2.imshow(res)
-cv2.waitkey(0)
 #res = cv2.warpAffine(img,M,(rows,cols))
 
 #save_path = '../pics/perspectivetransform/' + str(time.time()) + '.jpg'
