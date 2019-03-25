@@ -230,6 +230,8 @@ if __name__=="__main__":
     
     for i,num in enumerate(nums):
         ret, num = cv2.threshold(num,127,255,cv2.THRESH_BINARY)
+        kernel = np.ones((10, 10), np.uint8)
+        num = cv2.morphologyEx(num, cv2.MORPH_OPEN, kernel)
         width = np.nonzero(np.sum(num,0)) 
         height = np.nonzero(np.sum(num,1))
         num = num[height[0][0]:height[0][-1], width[0][0]:width[0][-1]]
@@ -241,8 +243,7 @@ if __name__=="__main__":
             im = cv2.dilate(im, kernel, iterations=1)
             #8之所以识别错是因为旁边还有小颗粒没有去除掉
             #还是没解决
-            kernel = np.ones((7, 7), np.uint8)
-            num = cv2.morphologyEx(num, cv2.MORPH_OPEN, kernel)
+            
             
             #print(num.shape)
             #print(im.shape)
